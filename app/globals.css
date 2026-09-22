@@ -1,0 +1,201 @@
+@import "tailwindcss";
+
+@theme {
+  /* Paleta */
+  --color-bg: #fbfbfa;
+  --color-ink: #0b0b0b;
+  --color-muted: #6b6b6b;
+  --color-body: #444444;
+  --color-surface: #f1f0ed;
+  --color-on-dark: #fbfbfa;
+  --color-on-dark-muted: #8d8d8d;
+  --color-on-dark-dim: #3a3a3a;
+  --color-hairline: rgba(11, 11, 11, 0.14);
+  --color-hairline-soft: rgba(11, 11, 11, 0.12);
+  --color-hairline-header: rgba(11, 11, 11, 0.07);
+  --color-tint: rgba(11, 11, 11, 0.03);
+  /* Hairline aplanada a opaco para las grillas de 1px: al dibujarse con
+     outline los bordes contiguos se superponen, y un rgba se duplicaria
+     oscureciendo la linea. Estos son el resultado exacto de
+     rgba(11,11,11,0.14) sobre --bg y sobre --surface. */
+  --color-rule: #d9d9d9;
+  --color-rule-surface: #d1d0cd;
+
+  /* Tipografía */
+  --font-display: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+}
+
+:root {
+  /* Espaciado fluido: sin media queries, todo en clamp() */
+  --gutter: clamp(16px, 4vw, 56px);
+  --section-y: clamp(56px, 10vw, 140px);
+  --header-h: 82px;
+}
+
+@layer base {
+  /* Sin scroll-behavior: smooth. Lenis anima el scroll él mismo llamando a
+     window.scrollTo en cada frame, y el smooth nativo lo interceptaría
+     dejándolo clavado. Si Lenis no arranca (reduced motion), los anclas
+     saltan de una, que es lo correcto en ese caso. */
+  body {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    -webkit-font-smoothing: antialiased;
+    /* El clipping horizontal va acá: ningún ancestro del header sticky
+       puede tener overflow-x hidden o el sticky deja de funcionar. */
+    overflow-x: hidden;
+  }
+
+  section[id] {
+    scroll-margin-top: var(--header-h);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--color-muted);
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-bg);
+  }
+}
+
+@layer components {
+  /* Spec de label mono: 11px, mayúsculas; el tracking se pasa por utilidad. */
+  .mono-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+  }
+
+  /* "Matias Gardella" en display grande: el h1 del hero y el wordmark del
+     footer comparten cuerpo exacto. Mide 6.717em con esta fuente y tracking,
+     o sea ~0.847vw por cada 1vw de cuerpo: con 12.6vw entra en una sola
+     línea desde ~340px de viewport, con aire para fallbacks de fuente. */
+  .wordmark {
+    font-size: clamp(46px, 12.6vw, 210px);
+    line-height: 0.86;
+    font-weight: 700;
+    letter-spacing: -0.045em;
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marq var(--marq-duration, 28s) linear infinite;
+  }
+}
+
+@keyframes marq {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation-play-state: paused;
+  }
+}
+
+/* ── Roll de texto en hover ──────────────────────────────────────────────
+   Dos copias apiladas dentro de una caja de una línea con overflow hidden.
+   El disparador es el ancestro con `.roll` (normalmente el <a>), para que el
+   efecto arranque con el hover del link entero y no carácter por carácter. */
+@layer components {
+  .text-roll {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+  }
+
+  .text-roll__track {
+    display: grid;
+  }
+
+  .text-roll__copy {
+    grid-area: 1 / 1;
+    display: flex;
+  }
+
+  .text-roll__copy > span {
+    display: inline-block;
+    transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+
+  /* La segunda copia espera abajo, fuera del recorte. */
+  .text-roll__copy + .text-roll__copy > span {
+    transform: translateY(100%);
+  }
+
+  .roll:hover .text-roll__copy > span,
+  .roll:focus-visible .text-roll__copy > span {
+    transform: translateY(-100%);
+  }
+
+  .roll:hover .text-roll__copy + .text-roll__copy > span,
+  .roll:focus-visible .text-roll__copy + .text-roll__copy > span {
+    transform: translateY(0);
+  }
+
+  /* El roll reemplaza al cambio de color: si no, pasan las dos cosas. */
+  .roll:hover {
+    color: inherit;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Sin movimiento: vuelve el hover de color del spec original. */
+  .text-roll__copy > span {
+    transition: none;
+  }
+
+  .roll:hover .text-roll__copy > span,
+  .roll:focus-visible .text-roll__copy > span {
+    transform: none;
+  }
+
+  .roll:hover .text-roll__copy + .text-roll__copy > span,
+  .roll:focus-visible .text-roll__copy + .text-roll__copy > span {
+    transform: translateY(100%);
+  }
+
+  .roll:hover {
+    color: var(--color-muted);
+  }
+}
+
+/* ── Onda en los títulos grandes ─────────────────────────────────────────
+   El canvas WebGL se dibuja encima y el texto real queda en opacity 0: se
+   mantiene en el DOM para lectores de pantalla y para SEO. Si el efecto no
+   se monta (sin WebGL o con reduced motion) no se agrega `wave-text--on` y
+   el texto se ve normal. */
+@layer components {
+  .wave-text {
+    position: relative;
+  }
+
+  /* Coincide en ancho con la caja del bloque y se extiende 32px arriba y
+     abajo, donde no genera scroll horizontal. */
+  .wave-text > canvas {
+    position: absolute;
+    top: -32px;
+    left: 0;
+    pointer-events: none;
+  }
+
+  .wave-text--on .wave-text__label {
+    opacity: 0;
+  }
+}
