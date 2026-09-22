@@ -16,7 +16,7 @@ export default function Hero() {
           Diseño web para <strong className="font-bold">negocios de servicios</strong>, desde
           Argentina.
         </p>
-        <p className="m-0 max-w-[34ch] justify-self-end text-right text-[clamp(17px,1.5vw,22px)] leading-[1.35] text-muted text-pretty">
+        <p className="m-0 max-w-[34ch] text-[clamp(17px,1.5vw,22px)] md:justify-self-end md:text-right leading-[1.35] text-muted text-pretty">
           Diseño experiencias digitales{" "}
           <span className="font-bold text-ink">estratégicas</span> que transforman la{" "}
           <span className="font-bold text-ink">atención</span> en{" "}

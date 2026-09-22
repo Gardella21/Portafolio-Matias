@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import "lenis/dist/lenis.css";
 import "./globals.css";
+import PageBackground from "@/components/PageBackground";
 import SmoothScroll from "@/components/SmoothScroll";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="es-AR" className={jetbrainsMono.variable}>
       <body>
         <SmoothScroll />
+        <PageBackground />
         {children}
       </body>
     </html>

@@ -10,11 +10,11 @@ export default function Footer() {
       <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,200px),1fr))] gap-[clamp(28px,4vw,56px)]">
         <div>
           <span className="mono-label tracking-[0.18em] text-on-dark-muted">Redes</span>
-          <div className="mt-6 flex flex-col items-start gap-1 text-[clamp(16px,1.4vw,20px)]">
-            <a href={contacto.instagramHref} target="_blank" rel="noopener" className="roll">
+          <div className="mt-6 flex flex-col items-start text-[clamp(16px,1.4vw,20px)]">
+            <a href={contacto.instagramHref} target="_blank" rel="noopener" className="roll py-1">
               <TextRoll>Instagram</TextRoll>
             </a>
-            <a href={contacto.whatsappHref} target="_blank" rel="noopener" className="roll">
+            <a href={contacto.whatsappHref} target="_blank" rel="noopener" className="roll py-1">
               <TextRoll>WhatsApp</TextRoll>
             </a>
           </div>
@@ -22,13 +22,13 @@ export default function Footer() {
 
         <div className="justify-self-end text-right">
           <span className="mono-label tracking-[0.18em] text-on-dark-muted">Menú</span>
-          <div className="mt-6 flex flex-col items-end gap-1 text-[clamp(16px,1.4vw,20px)]">
+          <div className="mt-6 flex flex-col items-end text-[clamp(16px,1.4vw,20px)]">
             {navLinks.map((link) => (
-              <a key={link.href} href={link.href} className="roll">
+              <a key={link.href} href={link.href} className="roll py-1">
                 <TextRoll>{link.label}</TextRoll>
               </a>
             ))}
-            <a href="#contacto" className="roll">
+            <a href="#contacto" className="roll py-1">
               <TextRoll>Contacto</TextRoll>
             </a>
           </div>
@@ -39,9 +39,9 @@ export default function Footer() {
         Matias Gardella
       </WaveText>
 
-      <div className="mono-label mt-[clamp(24px,4vw,44px)] flex items-center justify-between gap-5 tracking-[0.14em] text-muted">
-        <span>Buenos Aires, AR</span>
-        <a href="#top" className="roll">
+      <div className="mono-label mt-[clamp(24px,4vw,44px)] flex flex-wrap items-center justify-between gap-x-5 gap-y-3 tracking-[0.14em] text-muted">
+        <span className="whitespace-nowrap">Buenos Aires, AR</span>
+        <a href="#top" className="roll py-2 whitespace-nowrap">
           <TextRoll>Volver arriba ↑</TextRoll>
         </a>
         <span>©2026</span>

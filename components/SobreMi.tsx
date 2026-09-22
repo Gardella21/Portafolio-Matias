@@ -1,3 +1,4 @@
+import Reveal from "@/components/Reveal";
 import { diferenciales, serviciosNombres } from "@/lib/data";
 
 export default function SobreMi() {
@@ -8,7 +9,7 @@ export default function SobreMi() {
     >
       <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,280px),1fr))] gap-[clamp(32px,5vw,72px)]">
         {/* Ocupa dos columnas sólo cuando la grilla llega a tener más de una. */}
-        <div className="min-w-0 md:col-span-2">
+        <Reveal className="min-w-0 md:col-span-2">
           <span className="mono-label tracking-[0.18em] text-on-dark-muted">
             Sobre mí
           </span>
@@ -17,9 +18,9 @@ export default function SobreMi() {
             no decorar. Sin plantillas, sin intermediarios, sin vueltas: entiendo el
             negocio, armo la estructura y la ejecuto completa.
           </p>
-        </div>
+        </Reveal>
 
-        <div>
+        <Reveal delay={0.1}>
           <span className="mono-label tracking-[0.18em] text-on-dark-muted">
             Servicios
           </span>
@@ -28,9 +29,9 @@ export default function SobreMi() {
               <span key={s}>{s}</span>
             ))}
           </div>
-        </div>
+        </Reveal>
 
-        <div>
+        <Reveal delay={0.18}>
           <span className="mono-label tracking-[0.18em] text-on-dark-muted">
             Diferenciales
           </span>
@@ -39,7 +40,7 @@ export default function SobreMi() {
               <span key={d}>{d}</span>
             ))}
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

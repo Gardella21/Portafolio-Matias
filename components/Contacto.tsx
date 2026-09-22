@@ -37,13 +37,13 @@ export default function Contacto() {
       </h2>
 
       {/* Mismas guías de 1px que en "Problemas": gap + outline por tarjeta. */}
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,260px),1fr))] gap-px bg-bg">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,260px),1fr))] gap-px">
         {tarjetas.map((t) => (
           <a
             key={t.label}
             href={t.href}
             {...(t.externo ? { target: "_blank", rel: "noopener" } : {})}
-            className="flex min-w-0 flex-col gap-3 bg-bg p-[clamp(22px,3vw,34px)] transition-colors duration-150 ease-out [outline:1px_solid_var(--color-rule)] hover:bg-ink hover:text-bg"
+            className="flex min-w-0 flex-col gap-3 p-[clamp(22px,3vw,34px)] transition-colors duration-150 ease-out [outline:1px_solid_var(--color-rule)] hover:bg-ink hover:text-bg"
           >
             <span className="mono-label tracking-[0.16em] opacity-60">
               {t.label} ↗

@@ -21,7 +21,7 @@ export default function MarqueeServicios() {
   return (
     <div
       aria-hidden="true"
-      className="overflow-hidden border-y border-hairline-soft bg-bg py-[14px]"
+      className="overflow-hidden border-y border-hairline-soft py-[14px]"
     >
       <div
         className="marquee-track mono-label tracking-[0.22em] text-muted"

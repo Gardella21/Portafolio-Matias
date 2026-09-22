@@ -18,7 +18,7 @@ export default function Header() {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-hairline-header bg-[rgba(251,251,250,0.86)] backdrop-blur-[10px]">
+    <header className="sticky top-0 z-50 border-b border-hairline-header bg-[color-mix(in_srgb,var(--page-bg)_86%,transparent)] backdrop-blur-[10px]">
       <div className="flex items-center justify-between gap-6 px-[var(--gutter)] py-[18px]">
         <a
           href="#top"
@@ -70,12 +70,12 @@ export default function Header() {
         hidden={!open}
         className="border-t border-hairline-header px-[var(--gutter)] pt-6 pb-8 md:hidden"
       >
-        <nav className="mono-label flex flex-col items-start gap-5 tracking-[0.14em]">
+        <nav className="mono-label flex flex-col items-start gap-1 tracking-[0.14em]">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="roll"
+              className="roll py-2"
               onClick={() => setOpen(false)}
             >
               <TextRoll>{link.label}</TextRoll>
