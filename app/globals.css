@@ -39,7 +39,7 @@
      ~95px a 1536px de ancho y un tope de 104px. */
   --gutter: clamp(16px, 8vw - 28px, 104px);
   --section-y: clamp(56px, 10vw, 140px);
-  --header-h: 82px;
+  --header-h: 71px;
   transition: --page-bg 900ms ease;
 }
 

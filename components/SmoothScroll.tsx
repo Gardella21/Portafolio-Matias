@@ -14,6 +14,10 @@ export default function SmoothScroll() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (reduce.matches) return;
 
+    // Se mide en vez de fijarlo: con un número a mano, cualquier diferencia
+    // deja asomar una franja de la sección anterior debajo del header.
+    const headerH = document.querySelector("header")?.offsetHeight ?? 0;
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -23,7 +27,7 @@ export default function SmoothScroll() {
       touchMultiplier: 1,
       orientation: "vertical",
       autoToggle: true,
-      anchors: { offset: -82 },
+      anchors: { offset: -headerH },
     });
 
     let frame = requestAnimationFrame(function raf(time) {
